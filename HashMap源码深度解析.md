@@ -103,6 +103,7 @@ https://blog.csdn.net/u011617742/article/details/54576890
 	        table = new Entry[capacity];  
 	        init();  
 	    }
+
 其中涉及到位运算<<,，capacity <<= 1等价于capacity=capacity<<1，表示capacity左移1位
 从源码中可以看出，每次新建一个HashMap时，都会初始化一个table数组。table数组的元素为Entry节点
 
@@ -170,6 +171,7 @@ HashMap通过键的hashCode来快速的存取元素。当不同的对象hashCode
 	        addEntry(hash, key, value, i);  
 	        return null;  
 	    }
+
 通过源码我们可以清晰看到HashMap保存数据的过程为：
 1)首先判断key是否为null，若为null，则直接调用putForNullKey方法
 
@@ -186,6 +188,7 @@ HashMap通过键的hashCode来快速的存取元素。当不同的对象hashCode
 	        addEntry(0, null, value, 0);
 	        return null;
 	    }
+
 从代码可以看出，如果key为null的值，默认就存储到table[0]开头的链表了。然后遍历table[0]的链表的每个节点Entry，如果发现其中存在节点Entry的key为null，就替换新的value，然后返回旧的value，如果没发现key等于null的节点Entry，就增加新的节点
 
 
@@ -213,6 +216,7 @@ HashMap通过键的hashCode来快速的存取元素。当不同的对象hashCode
 	        if (size++ >= threshold)  
 	            resize(2 * table.length);  
 	    } 
+
 这里新增加节点采用了头插法，新节点都增加到头部，新节点的next指向老节点
 这里涉及到了HashMap的扩容问题，随着HashMap中元素的数量越来越多，发生碰撞的概率就越来越大，所产生的链表长度就会越来越长，这样势必会影响HashMap的速度，为了保证HashMap的效率，系统必须要在某个临界点进行扩容处理。该临界点在当HashMap中元素的数量等于table数组长度*加载因子。但是扩容是一个非常耗时的过程，因为它需要重新计算这些数据在新table数组中的位置并进行复制处理。
 
@@ -229,7 +233,9 @@ HashMap通过键的hashCode来快速的存取元素。当不同的对象hashCode
 	        table = newTable;
 	        threshold = (int)Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);
 	    }
+
 从代码可以看出，如果大小超过最大容量就返回。否则就new 一个新的Entry数组，长度为旧的Entry数组长度的两倍。然后将旧的Entry[]复制到新的Entry[].
+
 	void transfer(HashMapEntry[] newTable) {
 	        int newCapacity = newTable.length;
 	        for (HashMapEntry<K,V> e : table) {
@@ -258,6 +264,7 @@ keySet()方法可以获取包含key的set集合，调用该集合的迭代器可
 	        }
 	        return ks;
 	    }
+
 KeySet是HashMap中的内部类，继承AbstractSet，KeySet中获取的迭代器为KeyIterator
 
 	private final class KeySet extends AbstractSet<K> {
@@ -266,12 +273,15 @@ KeySet是HashMap中的内部类，继承AbstractSet，KeySet中获取的迭代�
 	        }
 	        ......
 	    }
+
 KeyIterator继承自HashIterator
+
 	private final class KeyIterator extends HashIterator<K> {
 	        public K next() {
 	            return nextEntry().getKey();
 	        }
 	    }
+
 	private abstract class HashIterator<E> implements Iterator<E> {
 	        HashMapEntry<K,V> next;        // next entry to return
 	        int expectedModCount;   // For fast-fail
