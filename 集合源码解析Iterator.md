@@ -14,6 +14,7 @@ Java 基础（二）集合源码解析 Iterator
 我们先来看一下类关系图～
 
 ![](http://user-gold-cdn.xitu.io/2017/9/24/89f19f4769cfc2b41706e201cbea6431?imageView2/0/w/1280/h/960/format/webp/ignore-error/1）
+![](http://static.open-open.com/lib/uploadImg/20150521/20150521171913_332.bmp)
 
 Java 提供的集合都在 Java.utils 包下，集合主要分两类，Collection 和 Map。我们用到的各种类型的集合，都是实现自这两个接口。集合的实现类有很多，开发过程中，我们需要根据不同的需求，选择合适的集合设计，以便高效率的解决我们的实际问题。至于什么场景用哪一种类型的容器，使用这种容器能带来哪些好处，这就是我们要研究的核心点，也是我们用好 Java 集合的精髓。
 
