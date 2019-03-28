@@ -6,4 +6,4 @@
 
 
 ### <span id="structs"> 队列 </span> ###
-	[百度](www.baidu.com "标题")
+	https://github.com/15905818733/structure/blob/master/list.md
