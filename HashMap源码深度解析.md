@@ -60,7 +60,8 @@ https://blog.csdn.net/u011617742/article/details/54576890
 4 HashMap重要概念
 
 
-https://img-blog.csdn.net/20170116201521793
+![](https://img-blog.csdn.net/20170116201521793)
+
 
 
 5 HashMap源码分析
@@ -104,6 +105,7 @@ https://img-blog.csdn.net/20170116201521793
 	    }
 其中涉及到位运算<<,，capacity <<= 1等价于capacity=capacity<<1，表示capacity左移1位
 从源码中可以看出，每次新建一个HashMap时，都会初始化一个table数组。table数组的元素为Entry节点
+
 	static class Entry<K,V> implements Map.Entry<K,V> {  
 	        final K key;  
 	        V value;  
@@ -121,6 +123,7 @@ https://img-blog.csdn.net/20170116201521793
 	        }  
 	        .......  
 	    }
+
 其中Entry为HashMap的内部类，它包含了键key、值value、下一个节点next，以及hash值，这是非常重要的，正是由于Entry才构成了table数组的项为链表
 
 2.hashMap.put("1", "chris");
@@ -317,27 +320,33 @@ KeyIterator继承自HashIterator
 	    }
 
 4.Iterator<Entry<String, String>> iterator=hashMap.entrySet().iterator();
+
 	public Set<Map.Entry<K,V>> entrySet() {
 	        return entrySet0();
-	    }
+	}
 	private Set<Map.Entry<K,V>> entrySet0() {
 	        Set<Map.Entry<K,V>> es = entrySet;
 	        return es != null ? es : (entrySet = new EntrySet());
-	    }
+	}
+
 EntrySet是HashMap内部类，继承AbstractSet，EntrySet中获取的迭代器为EntryIterator
+
 	private final class EntrySet extends AbstractSet<Map.Entry<K,V>> {
 	        public Iterator<Map.Entry<K,V>> iterator() {
 	            return newEntryIterator();
 	        }        ......
 	    }
+
 	Iterator<Map.Entry<K,V>> newEntryIterator()   {
 	        return new EntryIterator();
 	    }
+
 	private final class EntryIterator extends HashIterator<Map.Entry<K,V>> {
 	        public Map.Entry<K,V> next() {
 	            return nextEntry();
 	        }
 	    }
+
 	private abstract class HashIterator<E> implements Iterator<E> {
 	        HashMapEntry<K,V> next;        // next entry to return
 	        int expectedModCount;   // For fast-fail
@@ -387,6 +396,7 @@ EntrySet是HashMap内部类，继承AbstractSet，EntrySet中获取的迭代器�
 显然entrySet()遍历的效率会比keySet()高，因为keySet获取key的集合后，还需要调用get（）方法，相当于遍历两次
 
 5.hashMap.get("1");
+
 	public V get(Object key) {  
 	        // 若为null，调用getForNullKey方法返回相对应的value  
 	        if (key == null)  
@@ -402,6 +412,7 @@ EntrySet是HashMap内部类，继承AbstractSet，EntrySet中获取的迭代器�
 	        }  
 	        return null;  
 	    }
+
 在这里能够根据key快速的取到value除了和HashMap的数据结构密不可分外，还和Entry有莫大的关系，在前面就提到过，HashMap在存储过程中并没有将key，value分开来存储，而是当做一个整体key-value来处理的，这个整体就是Entry对象。同时value也只相当于key的附属而已。在存储的过程中，系统根据key的hashcode来决定Entry在table数组中的存储位置，在取的过程中同样根据key的hashcode取出相对应的Entry对象
 
 
