@@ -6,4 +6,4 @@
 
 
 ### <span id="structs"> 队列 </span> ###
-	https://github.com/15905818733/structure/blob/master/list.md
+	[超链接文字](https://github.com/15905818733/structure/blob/master/list.md）
